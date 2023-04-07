@@ -1,0 +1,38 @@
+{
+  "name": "bfu",
+  "version": "1.0.0",
+  "description": "File uploader",
+  "packageManager": "pnpm@8.1.1",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "dev": "nr -r dev"
+  },
+  "keywords": [
+    "big file",
+    "uploader",
+    "progress control"
+  ],
+  "author": "chinbor",
+  "license": "MIT",
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.38.4",
+    "eslint": "^8.37.0",
+    "lint-staged": "^13.2.0",
+    "only-allow": "^1.1.1",
+    "simple-git-hooks": "^2.8.1",
+    "typescript": "^5.0.3"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@antfu"
+    ]
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,vue,md}": [
+      "eslint --fix"
+    ]
+  }
+}

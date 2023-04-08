@@ -5,8 +5,6 @@ import './style/main.css'
 import 'uno.css'
 import type { GlobModule } from './types'
 
-console.log(1)
-
 const app = createApp(App)
 
 Object.values(import.meta.glob<GlobModule>('./modules/*.ts', { eager: true }))

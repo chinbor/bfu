@@ -1,16 +1,19 @@
 <template>
-  <div w100vw h100vh fcc>
-    <button button-base class="mx-10" @click="() => $router.push('/svgLoading')">
-      SvgLoading
+  <div w100vw h100vh fcc flex-col>
+    <button btn-base hover:btn-base-hover active:btn-base-active my-10px @click="() => $router.push('/demo1')">
+      单文件上传 [FORM-DATA]
     </button>
-    <button button-base class="mx-10" @click="() => $router.push('/flyBox')">
-      FlyBox
+    <button btn-base hover:btn-base-hover active:btn-base-active my-10px @click="() => $router.push('/demo2')">
+      多文件上传 [BASE-64] 只适合图片
     </button>
-    <button button-base class="mx-10" @click="() => $router.push('/fullContainer')">
-      FullContainer
+    <button btn-warning hover:btn-warning-hover active:btn-warning-active my-10px @click="() => $router.push('/demo3')">
+      多文件上传 [前端定义文件hash名]
     </button>
-    <button button-base class="mx-10" @click="() => $router.push('/waterfallsFlow')">
-      WaterfallsFlow
+    <button btn-error hover:btn-error-hover active:btn-error-active my-10px @click="() => $router.push('/demo4')">
+      Error
+    </button>
+    <button btn-success hover:btn-success-hover active:btn-success-active my-10px @click="() => $router.push('/demo5')">
+      Success
     </button>
   </div>
 </template>

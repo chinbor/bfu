@@ -24,7 +24,6 @@ function selectFile() {
 
 function fileChange() {
   const file = inputRef.value?.files![0]
-  inputRef.value!.value = ''
 
   if (!file)
     return
@@ -52,6 +51,8 @@ function fileChange() {
       name: `${spark.end()}${suffix}`, // TODO: 变成hash名字
     })
   })
+
+  inputRef.value!.value = ''
 }
 
 function deleteFile(idx: number) {

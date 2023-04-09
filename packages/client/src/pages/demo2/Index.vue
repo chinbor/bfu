@@ -22,7 +22,6 @@ function selectFile() {
 
 function fileChange() {
   const file = inputRef.value?.files![0]
-  inputRef.value!.value = ''
 
   if (!file)
     return
@@ -44,6 +43,8 @@ function fileChange() {
       name: file.name,
     })
   })
+
+  inputRef.value!.value = ''
 }
 
 function deleteFile(idx: number) {

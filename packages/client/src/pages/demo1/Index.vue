@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { SingleProps } from '~/api'
 import { uploadSingle } from '~/api'
 
 const uploading = ref(false)
@@ -19,15 +20,9 @@ function selectFile() {
 
 function fileChange() {
   const file = inputRef.value?.files![0]
-  inputRef.value!.value = ''
 
   if (!file)
     return
-
-  if (lists.value.length === 1) {
-    alert('暂时还不支持多文件上传')
-    return
-  }
 
   if (!/(PNG|JPG|JPEG)/i.test(file.name)) {
     alert('上传文件只能是 PNG/JPG/JPEG 格式')
@@ -43,6 +38,8 @@ function fileChange() {
     file,
     id: id++,
   })
+
+  inputRef.value!.value = ''
 }
 
 function deleteFile(idx: number) {
@@ -60,12 +57,18 @@ function uploadFile() {
 
   uploading.value = true
 
-  const formData = new FormData()
-  formData.append('file', lists.value[0].file)
-  formData.append('filename', lists.value[0].file.name)
+  const promises: Array<Promise<SingleProps>> = []
 
-  uploadSingle(formData).then((data) => {
-    alert(`上传成功：${data.url}`)
+  for (const item of lists.value) {
+    const formData = new FormData()
+    formData.append('file', item.file)
+    formData.append('filename', item.file.name)
+
+    promises.push(uploadSingle(formData))
+  }
+
+  Promise.all(promises).then((res) => {
+    alert(`上传成功：${JSON.stringify(res)}`)
   }).catch((err) => {
     console.error(err)
     alert('上传失败')

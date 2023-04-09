@@ -3,7 +3,7 @@
     <button btn-base hover:btn-base-hover active:btn-base-active my-10px @click="() => $router.push('/demo1')">
       单一文件上传 [FORM-DATA] 未去重
     </button>
-    <button btn-base hover:btn-base-hover active:btn-base-active my-10px @click="() => $router.push('/demo2')">
+    <button btn-primary hover:btn-primary-hover active:btn-primary-active my-10px @click="() => $router.push('/demo2')">
       单一文件上传 [BASE-64] 只适合图片 去重
     </button>
     <button btn-warning hover:btn-warning-hover active:btn-warning-active my-10px @click="() => $router.push('/demo3')">
@@ -13,7 +13,7 @@
       多文件上传 [进度管控] 未去重
     </button>
     <button btn-success hover:btn-success-hover active:btn-success-active my-10px @click="() => $router.push('/demo5')">
-      Success
+      拖拽多文件上传 [进度管控] 未去重
     </button>
   </div>
 </template>

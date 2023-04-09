@@ -96,7 +96,7 @@ function uploadFile() {
     <ul v-if="lists.length" class="text-14px text-gray mt-10px">
       <li v-for="(item, index) in lists" :key="item.id" class="flex items-center">
         <span inline-block single-hidden class=" w300px">{{ item.file.name }}</span>
-        <span class="text-[#C04131] flex items-center cursor-pointer" @click="deleteFile(index)">
+        <span v-if="!uploading" class="text-[#C04131] flex items-center cursor-pointer" @click="deleteFile(index)">
           <i i-ci-close-circle inline-block ml10px />
           移除
         </span>

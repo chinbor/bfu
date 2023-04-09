@@ -3,6 +3,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import { uploadSingle, uploadSingleBase64, uploadWithHashName } from './controller'
 import { HOST_NAME, PORT, UPLOAD_DIR } from './constant'
+import { delay } from './utils'
 
 const app = express()
 
@@ -31,6 +32,7 @@ app.use((req, res, next) => {
 
 app.post('/uploadSingle', async (req, res) => {
   try {
+    await delay()
     await uploadSingle(req, res)
   }
   catch (err) {
@@ -47,6 +49,7 @@ app.post('/uploadSingle', async (req, res) => {
 
 app.post('/uploadSingleBase64', async (req, res) => {
   try {
+    await delay()
     await uploadSingleBase64(req, res)
   }
   catch (err) {
@@ -63,6 +66,7 @@ app.post('/uploadSingleBase64', async (req, res) => {
 
 app.post('/uploadWithHashName', async (req, res) => {
   try {
+    await delay()
     await uploadWithHashName(req, res)
   }
   catch (err) {

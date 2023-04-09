@@ -108,7 +108,7 @@ function uploadFile() {
 
     <div v-if="lists.length">
       <div v-for="(item, index) in lists" :key="item.id" class="relative w300px my-10px border-2px border-[#3079ED]">
-        <i class="i-ci-close-circle cursor-pointer inline-block ml10px absolute right-0px top-0px text-[#C53727] w30px h30px" @click="deleteFile(index)" />
+        <i v-if="!uploading" class="i-ci-close-circle cursor-pointer inline-block ml10px absolute right-0px top-0px text-[#C53727] w30px h30px" @click="deleteFile(index)" />
         <img :src="item.url" :alt="item.name" class="w100% h-auto">
       </div>
     </div>

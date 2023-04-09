@@ -13,3 +13,4 @@
 coverage
 dist
 node_modules
+packages/server/upload

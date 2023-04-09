@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import SparkerMD5 from 'spark-md5'
 import type { UploadAlreadyProps } from '~/api'
 import { isFileExist, mergeChunk, uploadAlready, uploadChunk } from '~/api'
-import type { FileToBufferProps } from '~/utils'
-import { delay, extractExt, fileToBuffer } from '~/utils'
+import { delay, extractExt } from '~/utils'
 
 interface ChunksProps {
   file: Blob
@@ -19,8 +17,6 @@ interface FileListProp {
   suffix?: string
   fileList?: string[]
   chunks?: ChunksProps[]
-  total?: number
-  loaded?: number
   percent?: string
   time?: number
 }
@@ -39,21 +35,30 @@ function selectFile() {
   inputRef.value?.click()
 }
 
-async function getAllBuffer(files: FileList) {
-  const promises: Promise<FileToBufferProps>[] = []
+async function getAllBuffer(lists: FileListProp[]) {
+  const promises: Promise<string>[] = []
 
-  for (const file of Array.from(files))
-    promises.push(fileToBuffer(file))
+  for (const list of lists) {
+    const promise = new Promise<string>((resolve) => {
+      const worker = new Worker('/hash.js')
 
-  const datas = await Promise.all(promises)
+      worker.postMessage({ fileChunkList: toRaw(list.chunks) })
+      worker.onmessage = (e) => {
+        const { hash } = e.data
+        resolve(hash)
+      }
+    })
 
-  return datas
+    promises.push(promise)
+  }
+
+  return Promise.all(promises)
 }
 
-async function getAllUploadedSlice() {
+async function getAllUploadedSlice(lists: FileListProp[]) {
   const promises: Promise<UploadAlreadyProps>[] = []
 
-  for (const list of lists.value) {
+  for (const list of lists) {
     promises.push(uploadAlready({
       HASH: list.hash!,
     }))
@@ -62,9 +67,17 @@ async function getAllUploadedSlice() {
   return await Promise.all(promises)
 }
 
-function fileSlice() {
-  lists.value.forEach((list) => {
-    const { file, hash, suffix } = list
+function fileSlice(files: FileList) {
+  const temp: FileListProp[] = []
+
+  Array.from(files).forEach((file) => {
+    const result: FileListProp = {
+      id: id++,
+      file,
+      time: 0,
+    }
+
+    const suffix = extractExt(file.name)
     let maxSize = 1024 * 100 // 100kb
     let count = Math.ceil(file.size / maxSize)
     let index = 0
@@ -75,19 +88,24 @@ function fileSlice() {
       count = 100
     }
 
-    list.count = count
-    list.maxSize = maxSize
+    result.count = count
+    result.maxSize = maxSize
+    result.suffix = suffix
 
     while (index < count) {
       chunks.push({
         file: file.slice(index * maxSize, maxSize * (index + 1)),
-        filename: `${hash}_${index + 1}${suffix}`,
+        filename: `${index + 1}${suffix}`,
       })
       index++
     }
 
-    list.chunks = chunks
+    result.chunks = chunks
+
+    temp.push(result)
   })
+
+  return temp
 }
 
 async function fileChange() {
@@ -99,28 +117,25 @@ async function fileChange() {
   try {
     selecting.value = true
 
-    const datas = await getAllBuffer(files)
+    const result = fileSlice(files)
 
-    selecting.value = false
+    const hashs = await getAllBuffer(result)
 
-    for (const data of datas) {
-      const spark = new SparkerMD5.ArrayBuffer()
-      spark.append(data.buffer)
-      lists.value.push({
-        id: id++,
-        file: data.file,
-        hash: spark.end(),
-        suffix: extractExt(data.file.name),
-        time: 0,
+    for (const [index, data] of hashs.entries()) {
+      result[index].hash = data
+      result[index].chunks?.forEach((chunk) => {
+        chunk.filename = `${data}_${chunk.filename}`
       })
     }
 
-    const alreadys = await getAllUploadedSlice()
+    const alreadys = await getAllUploadedSlice(result)
 
     for (const [index, already] of alreadys.entries())
-      lists.value[index].fileList = already.fileList
+      result[index].fileList = already.fileList
 
-    fileSlice()
+    selecting.value = false
+
+    lists.value = lists.value.concat(result)
   }
   catch (err) {
     console.error(err)
@@ -217,7 +232,7 @@ function allInOne(list: FileListProp) {
 }
 
 function uploadFile() {
-  if (uploading.value)
+  if (uploading.value || selecting.value)
     return
 
   if (!lists.value.length) {
@@ -255,7 +270,7 @@ function uploadFile() {
         <i v-if="selecting" i-svg-spinners-270-ring inline-block />
         选择文件
       </button>
-      <button ml-10px :class="uploading ? 'btn-success-disabled' : ['btn-success', 'hover:btn-success-hover', 'active:btn-success-active']" @click="uploadFile">
+      <button ml-10px :class="uploading || selecting ? 'btn-success-disabled' : ['btn-success', 'hover:btn-success-hover', 'active:btn-success-active']" @click="uploadFile">
         <i v-if="uploading" i-svg-spinners-270-ring inline-block />
         上传到服务器
       </button>

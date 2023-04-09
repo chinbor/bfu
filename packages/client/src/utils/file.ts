@@ -13,17 +13,25 @@ export function fileToBase64(file: File) {
   })
 }
 
+export interface FileToBufferProps {
+  buffer: ArrayBuffer
+  file: File
+}
+
 export function fileToBuffer(file: File) {
-  return new Promise<ArrayBuffer>((resolve) => {
+  return new Promise<FileToBufferProps>((resolve) => {
     const fileReader = new FileReader()
     fileReader.readAsArrayBuffer(file)
 
     fileReader.onload = (ev) => {
-      resolve(ev.target?.result as ArrayBuffer)
+      resolve({
+        buffer: ev.target?.result as ArrayBuffer,
+        file,
+      })
     }
 
-    fileReader.onerror = () => {
-      console.error(new Error('something wrong!!'))
+    fileReader.onerror = (err) => {
+      console.error(err)
     }
   })
 }

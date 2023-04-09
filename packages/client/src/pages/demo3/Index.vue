@@ -40,7 +40,7 @@ function fileChange() {
 
   Promise.all([fileToBase64(file), fileToBuffer(file)]).then(([url, buffer]) => {
     const spark = new SparkerMD5.ArrayBuffer()
-    spark.append(buffer)
+    spark.append(buffer.buffer)
 
     const suffix = extractExt(file.name)
 

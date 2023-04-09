@@ -15,5 +15,8 @@
     <button btn-success hover:btn-success-hover active:btn-success-active my-10px @click="() => $router.push('/demo5')">
       拖拽多文件上传 [进度管控] 未去重
     </button>
+    <button btn-success hover:btn-success-hover active:btn-success-active my-10px @click="() => $router.push('/demo6')">
+      多文件大文件上传 [分片上传 | 断点续传 | 进度管控 | 秒传]
+    </button>
   </div>
 </template>

@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import express from 'express'
 import bodyParser from 'body-parser'
-import { uploadSingle, uploadSingleBase64, uploadWithHashName } from './controller'
+import { isFileExist, mergeChunk, uploadAlready, uploadChunk, uploadSingle, uploadSingleBase64, uploadWithHashName } from './controller'
 import { HOST_NAME, PORT, UPLOAD_DIR } from './constant'
 import { delay } from './utils'
 
@@ -40,7 +40,7 @@ app.post('/uploadSingle', async (req, res) => {
       code: 1,
       success: false,
       data: {
-        err,
+        err: err.message,
       },
       message: 'Oops!!',
     })
@@ -57,7 +57,7 @@ app.post('/uploadSingleBase64', async (req, res) => {
       code: 1,
       success: false,
       data: {
-        err,
+        err: err.message,
       },
       message: 'Oops!!',
     })
@@ -74,7 +74,71 @@ app.post('/uploadWithHashName', async (req, res) => {
       code: 1,
       success: false,
       data: {
-        err,
+        err: err.message,
+      },
+      message: 'Oops!!',
+    })
+  }
+})
+
+app.get('/uploadAlready', async (req, res) => {
+  try {
+    await uploadAlready(req, res)
+  }
+  catch (err) {
+    res.send({
+      code: 1,
+      success: false,
+      data: {
+        err: err.message,
+      },
+      message: 'Oops!!',
+    })
+  }
+})
+
+app.get('/isFileExist', async (req, res) => {
+  try {
+    await isFileExist(req, res)
+  }
+  catch (err) {
+    res.send({
+      code: 1,
+      success: false,
+      data: {
+        err: err.message,
+      },
+      message: 'Oops!!',
+    })
+  }
+})
+
+app.post('/uploadChunk', async (req, res) => {
+  try {
+    await uploadChunk(req, res)
+  }
+  catch (err) {
+    res.send({
+      code: 1,
+      success: false,
+      data: {
+        err: err.message,
+      },
+      message: 'Oops!!',
+    })
+  }
+})
+
+app.post('/mergeChunk', async (req, res) => {
+  try {
+    await mergeChunk(req, res)
+  }
+  catch (err) {
+    res.send({
+      code: 1,
+      success: false,
+      data: {
+        err: err.message,
       },
       message: 'Oops!!',
     })

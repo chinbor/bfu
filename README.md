@@ -1,10 +1,35 @@
 # Bfu
 
-the demo of [this](https://www.bilibili.com/video/BV1KQ4y1S7ER/?p=2&spm_id_from=pageDriver&vd_source=42ddedc50b84f4be4022e6fb50516b63)
+inspired from [file-upload](https://github.com/yeyan1996/file-upload) and [uploadFile](https://github.com/yaogengzhu/uploadFile)
+
+## Features
+
+* Client used `vue3` `unocss` `vite`
+* Server used `express` `multiparty`
+* Support multiple file
+* Support big file
+* Support instant transmission
+* Support breakpoint resume
+* Support multi-file drag and drop upload
+* Support file progress control
 
 ## Usage
 
-run `dev` to start the project.
+First, you need to install all dependency
+
+```sh
+pnpm install
+```
+
+Second, you can run `dev` to start the project
+
+```sh
+pnpm dev
+```
+
+## TODO
+
+- [ ] support pause and resume
 
 ## License
 

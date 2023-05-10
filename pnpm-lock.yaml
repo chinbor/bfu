@@ -47,6 +47,15 @@ importers:
         specifier: ^4.1.6
         version: registry.npmmirror.com/vue-router@4.1.6(vue@3.2.47)
     devDependencies:
+      '@iconify-json/ci':
+        specifier: ^1.1.9
+        version: registry.npmmirror.com/@iconify-json/ci@1.1.9
+      '@iconify-json/simple-line-icons':
+        specifier: ^1.1.4
+        version: registry.npmmirror.com/@iconify-json/simple-line-icons@1.1.4
+      '@iconify-json/svg-spinners':
+        specifier: ^1.1.1
+        version: registry.npmmirror.com/@iconify-json/svg-spinners@1.1.1
       '@types/node':
         specifier: ^18.14.2
         version: registry.npmmirror.com/@types/node@18.14.2
@@ -913,6 +922,30 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz}
     name: '@humanwhocodes/object-schema'
     version: 1.2.1
+    dev: true
+
+  registry.npmmirror.com/@iconify-json/ci@1.1.9:
+    resolution: {integrity: sha512-ZMz5YTH7vz3PEM6j1v2GCxKsfjCtNYenyOS/c4xk2tBHPCUtUuSQvgnqO4INTOMb7dERHV5VLziXFChhcfn02A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@iconify-json/ci/-/ci-1.1.9.tgz}
+    name: '@iconify-json/ci'
+    version: 1.1.9
+    dependencies:
+      '@iconify/types': registry.npmmirror.com/@iconify/types@2.0.0
+    dev: true
+
+  registry.npmmirror.com/@iconify-json/simple-line-icons@1.1.4:
+    resolution: {integrity: sha512-QcLHJeOFlndG/rPS5wH7l8IQuWsOALDmkIFu12j4kPUeLpaTZT6OxMumALA6ho5HKPS4d5AS6AuAU51OfBF0IA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@iconify-json/simple-line-icons/-/simple-line-icons-1.1.4.tgz}
+    name: '@iconify-json/simple-line-icons'
+    version: 1.1.4
+    dependencies:
+      '@iconify/types': registry.npmmirror.com/@iconify/types@2.0.0
+    dev: true
+
+  registry.npmmirror.com/@iconify-json/svg-spinners@1.1.1:
+    resolution: {integrity: sha512-Zoe9Pw8Ljfx4dYX5+7Bl8VrerReqJfv1OGee0+Tclg9FWw0Bqrd5TfNseRvXYWNXVIHt+V13uzcTfzpfSTi9Lw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@iconify-json/svg-spinners/-/svg-spinners-1.1.1.tgz}
+    name: '@iconify-json/svg-spinners'
+    version: 1.1.1
+    dependencies:
+      '@iconify/types': registry.npmmirror.com/@iconify/types@2.0.0
     dev: true
 
   registry.npmmirror.com/@iconify/types@2.0.0:

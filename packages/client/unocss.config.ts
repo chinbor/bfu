@@ -5,8 +5,13 @@ export default defineConfig({
     presetUno({ preflight: false }),
     presetAttributify(),
     presetIcons({
-      scale: 1.1,
-      cdn: 'https://esm.sh/',
+      scale: 1.2,
+      warn: true,
+      collections: {
+        'ci': () => import('@iconify-json/ci/icons.json').then(i => i.default),
+        'svg-spinners': () => import('@iconify-json/svg-spinners/icons.json').then(i => i.default),
+        'simple-line-icons': () => import('@iconify-json/simple-line-icons/icons.json').then(i => i.default),
+      },
     }),
     presetTypography(),
   ],

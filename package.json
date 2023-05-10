@@ -5,8 +5,9 @@
   "packageManager": "pnpm@8.1.1",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
+    "postinstall": "npx simple-git-hooks",
     "dev": "nr -r dev",
-    "up": "taze -r -w"
+    "up": "taze -r major -I"
   },
   "keywords": [
     "big file",
